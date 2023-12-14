@@ -1,0 +1,20 @@
+h1 {
+    text-align: center;
+    color: whitesmoke;
+    font-size: xx-large;
+    background-color: rgb(52, 67, 31);
+}
+
+.carte {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+}
+
+html {
+    //background-image: url("images/goutham-krishna-h5wvMCdOV3w-unsplash.jpg");
+    background-color: grey;
+    background-size: cover;
+}
+
+

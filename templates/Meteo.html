@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonde de Zinzin</title>
+    <link href="/static/css/Meteo.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+
+</head>
+<body>
+    <h1>Données de la station météo</h1>
+    
+    <!--<div class="chart"></div>-->
+    <div class="carte" style="display:flex; justify-content:space-between">
+        <div id="AfficheTemp"></div>
+        <div style="height:800px; width:800px;">
+            <canvas id="lineChart"></canvas>
+        </div>
+    </div>
+    <script>
+        var ctx = document.getElementById("lineChart").getContext("2d");
+
+        var lineChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: {{ labels_temperature | safe }},
+            datasets: [
+            {
+                label: "Temperature",
+                data: {{ values_temperature | safe }},
+                fill: false,
+                borderColor: "rgb(75, 192, 192)",
+                lineTension: 0.1
+            },
+            {
+                label: "Humidité",
+                data: {{ values_humidite | safe }},
+                fill: false,
+                borderColor: "rgb(192, 75, 192)",
+                lineTension: 0.1
+            }
+            ]
+        },
+        option: {
+            responsive: false
+        }
+    });       
+    </script>
+
+    <script type="text/javascript" src="/static/js/app-meteo.js"></script>
+</body>
+
+</html>
