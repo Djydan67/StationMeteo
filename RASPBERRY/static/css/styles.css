@@ -1,0 +1,182 @@
+body {
+    font-family: 'Raleway', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fee22d;
+    color: #434343;
+    text-align: center;
+}
+h1 {
+    color: #434343;
+}
+
+.home-button {
+    background-color: #fee22d;
+    color: black;
+    border-radius: 5px;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s, border 0.3s;
+    cursor: pointer;
+}
+
+.home-button:hover, .home-button:focus {
+    background-color: black;
+    color: #fee22d;
+    /* border: 0.5px solid #fee22d; */
+}
+
+
+.home {
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+/* Temporarily hide or adjust the login-form for testing */
+.login-form {
+    margin-top: 150px;
+    border: 0.5px solid black;
+    /* max-width: 35%; */
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px;
+    background-color:black; /* Add some transparency */
+}
+.login-form h2{
+    color:#fee22d;
+}
+  .text-container {
+    height: 100vh;
+    width: 100vw;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .text-container h1{
+    margin: 0;
+    font-size: 150px;
+    color: rgba(225,225,225, .01);
+    background-image: url("https://images.assetsdelivery.com/compings_v2/gagarych/gagarych2001/gagarych200101543.jpg");
+    background-repeat: repeat;
+    -webkit-background-clip:text;
+    animation: animate 30s ease-in-out infinite;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    -webkit-text-stroke: 2.5px #fee22d;
+  }
+  
+    @keyframes animate {
+      0%, 100% {
+        background-position: left top;
+      }
+      25%{
+        background-position: right bottom;
+       }
+      50% {
+        background-position: left bottom;
+      }
+      75% {
+        background-position: right top;
+      }   
+  }
+
+  .input {
+    background-color: #fee22d; /* Yellow background */
+    color: black; /* Text color */
+    font-size: 16px; /* Larger font size for better readability */
+    border: 2px solid black; /* Solid border */
+    padding: 10px 15px; /* Padding for more space inside the input */
+    border-radius: 5px; /* Rounded corners */
+    outline: none; /* Remove the default focus outline */
+    transition: all 0.3s ease; /* Smooth transition for interactions */
+
+    /* Placeholder styling */
+    ::placeholder {
+        color: black; /* Color of the placeholder text */
+        opacity: 1; /* Full opacity */
+    }
+
+    /* Styling when the input is focused */
+    :focus {
+        border-color: #434343; /* Darker border on focus */
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    }
+}
+.home-return{
+    margin-top: 15px;
+    background-color: black;
+    color: #fee22d;
+    border-radius: 5px;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s, border 0.3s;
+    cursor: pointer;
+}
+.home-return:hover, .home-return:focus {
+    background-color: #fee22d;
+    color: black;
+    /* border: 0.5px solid black; */
+}
+.temperatureTable {
+    margin: 20px auto;
+    /* border-collapse: collapse; */
+    width: 65%;
+    box-shadow: 0 16px 16px rgba(0, 0, 0, 0.1);
+    /* border-radius: 5px; */
+    
+}
+
+.temperatureTable th, .temperatureTable td {
+    padding: 10px;
+    /* border: 1px solid black; */
+    text-align: center; 
+}
+
+
+.temperatureTable thead {
+    background-color: black;
+    color: #fee22d;
+}
+
+.temperatureTable tbody tr:nth-child(odd) {
+    background-color: #d6d6d6;
+    color: black;
+}
+
+.temperatureTable tbody tr:nth-child(even) {
+    background-color: white;
+    color: black;
+}
+
+/* Hover effect for rows */
+.temperatureTable tbody tr:hover {
+    transition: 0.3s;
+    background-color: #fee22d;
+    color: black;
+}
+#temperature{
+    width: 25%;
+}
+#humidity{
+    width: 25%;
+}
+.cesi-form {
+    width: 100%;
+    border: 0.5px solid black;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px;
+    background-color:black; /* Add some transparency */
+    font-size: 10px;
+}
