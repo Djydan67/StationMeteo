@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Bienvenue !</title>
+  <link href="https://fonts.googleapis.com/css?family=Raleway:900" rel="stylesheet">
+</head>
+</head>
+<body>
+<div class="text-container">
+    
+    <div class="login-form">
+        <h1>Bienvenue !</h1>
+
+        
+        <h2>Si vous êtes déjà inscrit</h2>
+        <a href="{{ url_for('login') }}"><button class="home-button">Se connecter</button></a>
+
+        <h2>Si vous n'êtes pas encore inscrit</h2>
+        <a href="{{ url_for('register') }}"><button class="home-button">S'inscrire</button></a>
+
+    </div>
+</div>
+<div class="cesi-form">
+    <header>
+        <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/e/ef/Logo_cesi_2022.png/1200px-Logo_cesi_2022.png" alt="CESI Logo" style="width: 50px; height: auto;">
+    </header>
+    <h3>| CESI | École d'ingénieurs | DI 2023-2025 |</h3>
+</div>
+</body>
+</html>

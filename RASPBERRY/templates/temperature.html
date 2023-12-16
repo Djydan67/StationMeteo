@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link>
+    <script>
+        function fetchTemperatureData() {
+            fetch('/api/temperature')
+                .then(response => response.json())
+                .then(data => {
+                    var tableBody = document.getElementById('temperatureTable').getElementsByTagName('tbody')[0];
+        
+                    // Iterate through the data in reverse order (to maintain DESC order)
+                    data.reverse().forEach(row => {
+                        // Check if this date is already in the table
+                        if (!document.querySelector(`#temperatureTable td[data-date="${row.Date}"]`)) {
+                            var newRow = tableBody.insertRow(0); // Insert at the beginning
+                            var cellDate = newRow.insertCell(0);
+                            var cellTemperature = newRow.insertCell(1);
+                            var cellHumidity = newRow.insertCell(2);
+        
+                            cellDate.setAttribute('data-date', row.Date); // Mark the cell with the date for future checks
+                            cellDate.textContent = row.Date;
+                            cellTemperature.textContent = row.Temperature;
+                            cellHumidity.textContent = row.Humidite;
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching temperature data:', error));
+        }
+        
+        setInterval(fetchTemperatureData, 5000);
+        document.addEventListener('DOMContentLoaded', fetchTemperatureData);
+        
+    </script>
+    
+</head>
+<body>
+    <a href="{{ url_for('home') }}"><button class="home-return">Accueil</button></a>
+    <a href="{{ url_for('logout') }}"><button class="home-return">Se deconnecter</button></a>
+
+
+    <h1>Bonjour {{ session.get('username', 'Guest')|upper }}! </h1>
+    <h1>Dernières données de température</h1>
+    <table class="temperatureTable" id="temperatureTable">
+        <thead>
+            <tr>
+                <th id="date">Date</th>
+                <th id="temperature">Température (°C)</th>
+                <th id="humidity">Humidité (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+<div class="cesi-form">
+    <header>
+        <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/e/ef/Logo_cesi_2022.png/1200px-Logo_cesi_2022.png" alt="CESI Logo" style="width: 50px; height: auto;">
+    </header>
+    <h3>| CESI | École d'ingénieurs | DI 2023-2025 |</h3>
+</div>
+</body>
+</html>
