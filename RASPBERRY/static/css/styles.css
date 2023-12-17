@@ -56,6 +56,7 @@ h1 {
     /* display: flex; */
     justify-content: center;
     align-items: center;
+    position:relative;
   }
   
   .text-container h1{
@@ -139,6 +140,33 @@ h1 {
     padding: 10px;
     /* border: 1px solid black; */
     text-align: center; 
+}
+
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: spa;
+    align-items: center;
+    position: relative;
+}
+
+.choixgraphique {
+    /*position: absolute;*/
+    display:flex;
+    justify-content:center;
+    top: 0;
+    right: 0;
+    margin: 10px;
+}
+
+.chart-canvas {
+    width: 800px;
+    height: 400px;
+}
+
+.graphique {
+    position: relative;
+    transform: translateX(-50%);
 }
 
 
