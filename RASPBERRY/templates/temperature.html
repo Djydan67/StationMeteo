@@ -7,34 +7,55 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link>
     <script>
-        function fetchTemperatureData() {
+        function updateTable(data) {
+            var tableBody = document.getElementById('temperatureTable').getElementsByTagName('tbody')[0];
+    
+            data.forEach(row => {
+                let dateTime = row.Date.split('T');
+                let date = dateTime[0];
+                let time = dateTime[1];
+                let datetimeAttribute = `${date}_${time}`;
+    
+                if (!document.querySelector(`#temperatureTable tr[data-datetime="${datetimeAttribute}"]`)) {
+                    var newRow = tableBody.insertRow(0);
+                    newRow.setAttribute('data-datetime', datetimeAttribute);
+    
+                    var cellDate = newRow.insertCell(0);
+                    var cellTime = newRow.insertCell(1);
+                    var cellTemperature = newRow.insertCell(2);
+                    var cellHumidity = newRow.insertCell(3);
+    
+                    cellDate.textContent = date;
+                    cellTime.textContent = time;
+                    cellTemperature.textContent = row.Temperature;
+                    cellHumidity.textContent = row.Humidite;
+                }
+            });
+        }
+    
+        function fetchAllTemperatureData() {
             fetch('/api/temperature')
                 .then(response => response.json())
                 .then(data => {
-                    var tableBody = document.getElementById('temperatureTable').getElementsByTagName('tbody')[0];
-        
-                    // Iterate through the data in reverse order (to maintain DESC order)
-                    data.reverse().forEach(row => {
-                        // Check if this date is already in the table
-                        if (!document.querySelector(`#temperatureTable td[data-date="${row.Date}"]`)) {
-                            var newRow = tableBody.insertRow(0); // Insert at the beginning
-                            var cellDate = newRow.insertCell(0);
-                            var cellTemperature = newRow.insertCell(1);
-                            var cellHumidity = newRow.insertCell(2);
-        
-                            cellDate.setAttribute('data-date', row.Date); // Mark the cell with the date for future checks
-                            cellDate.textContent = row.Date;
-                            cellTemperature.textContent = row.Temperature;
-                            cellHumidity.textContent = row.Humidite;
-                        }
-                    });
+                    updateTable(data);
                 })
-                .catch(error => console.error('Error fetching temperature data:', error));
+                .catch(error => console.error('Error fetching all temperature data:', error));
         }
-        
-        setInterval(fetchTemperatureData, 5000);
-        document.addEventListener('DOMContentLoaded', fetchTemperatureData);
-        
+    
+        function fetchRecentTemperatureData() {
+            fetch('/api/temperature/recent')
+                .then(response => response.json())
+                .then(data => {
+                    updateTable(data);
+                    // console.log(data);
+                })
+                .catch(error => console.error('Error fetching recent temperature data:', error));
+        }
+    
+        document.addEventListener('DOMContentLoaded', fetchAllTemperatureData);
+    
+        // Fetch recent data every 5 seconds
+        setInterval(fetchRecentTemperatureData, 5000);
     </script>
     
 </head>
@@ -49,6 +70,7 @@
         <thead>
             <tr>
                 <th id="date">Date</th>
+                <th id="Heure">Heure</th>
                 <th id="temperature">Température (°C)</th>
                 <th id="humidity">Humidité (%)</th>
             </tr>
