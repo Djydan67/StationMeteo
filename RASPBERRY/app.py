@@ -12,7 +12,7 @@ from flask import redirect, url_for, session
 app = Flask(__name__)
 api = Api(app)
 app.config['SQLALCHEMY_ECHO'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:admin@localhost/cesi'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/cesi'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -37,7 +37,7 @@ app.secret_key = 'cesi_di_2023'
 db_params = {
             'host': 'localhost',
             'user': 'root',
-            'password': 'admin',
+            'password': '',
             'db': 'cesi',
             'charset': 'utf8mb4',
             'cursorclass': pymysql.cursors.DictCursor
@@ -78,7 +78,7 @@ class TemperatureResource(Resource):
         connection = pymysql.connect(**db_params)
         try:
             with connection.cursor() as cursor:
-                sql = "SELECT `Date`, `Temperature`, `Humidite` FROM `temperature` ORDER BY `Date` DESC LIMIT 5"
+                sql = "SELECT `Date`, `Temperature`, `Humidite` FROM `temperature` ORDER BY `Date` DESC "
                 cursor.execute(sql)
                 rows = cursor.fetchall()
 
