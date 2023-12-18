@@ -136,7 +136,7 @@ class RecentTemperatureResource(Resource):
         connection = pymysql.connect(**db_params)
         try:
             with connection.cursor() as cursor:
-                sql = "SELECT `Date`, `Temperature`, `Humidite` FROM `temperature` ORDER BY `Date` DESC LIMIT 5"
+                sql = "SELECT `Date`, `Temperature`, `Humidite` FROM `temperature` ORDER BY `Date` DESC LIMIT 12"
                 cursor.execute(sql)
                 rows = cursor.fetchall()
                 data = [
