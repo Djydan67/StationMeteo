@@ -12,7 +12,7 @@ from flask import redirect, url_for, session
 app = Flask(__name__)
 api = Api(app)
 app.config['SQLALCHEMY_ECHO'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:azerty@localhost/cesi'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/cesi'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -37,7 +37,7 @@ app.secret_key = 'cesi_di_2023'
 db_params = {
             'host': 'localhost',
             'user': 'root',
-            'password': 'azerty',
+            'password': '',
             'db': 'cesi',
             'charset': 'utf8mb4',
             'cursorclass': pymysql.cursors.DictCursor
