@@ -51,7 +51,7 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
-    
+
     @staticmethod
     def create_table_if_not_exists():
         inspector = inspect(db.engine)
@@ -74,7 +74,7 @@ class Temperature(db.Model):
 @api.route('/api/temperature')
 class TemperatureResource(Resource):
     def get(self):
-        
+
         connection = pymysql.connect(**db_params)
         try:
             with connection.cursor() as cursor:
@@ -128,7 +128,7 @@ class RecentTemperatureResource(Resource):
                 return data
         finally:
             connection.close()
-            
+
 @api.route('/api/temperature/today')
 class RecentTemperatureResource(Resource):
     def get(self):
@@ -149,7 +149,7 @@ class RecentTemperatureResource(Resource):
                 return data
         finally:
             connection.close()
-            
+
 @api.route('/api/temperature/lastday')
 class RecentTemperatureResource(Resource):
     def get(self):
@@ -211,7 +211,7 @@ def register():
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
-        
+
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
         new_user = User(username=username,email=email, password=hashed_password)
@@ -220,7 +220,7 @@ def register():
         db.session.commit()
 
         return redirect(url_for('login'))
-    
+
     return render_template('register.html')
 
 if __name__ == '__main__':
