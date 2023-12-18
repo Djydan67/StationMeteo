@@ -12,7 +12,7 @@ from flask import redirect, url_for, session
 app = Flask(__name__)
 api = Api(app)
 app.config['SQLALCHEMY_ECHO'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/cesi'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:azerty@localhost/cesi'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -37,7 +37,7 @@ app.secret_key = 'cesi_di_2023'
 db_params = {
             'host': 'localhost',
             'user': 'root',
-            'password': '',
+            'password': 'azerty',
             'db': 'cesi',
             'charset': 'utf8mb4',
             'cursorclass': pymysql.cursors.DictCursor
@@ -95,7 +95,18 @@ class TemperatureResource(Resource):
             connection.close()
     def post(self):
         data = api.payload
-
+        connection = pymysql.connect(**db_params)
+        try:
+            with connection.cursor() as cursor:
+                sql = "INSERT INTO temperature (Temperature, Humidite) VALUES (%s, %s)"
+                cursor.execute(sql, (data['Temperature'], data['Humidite']))
+                connection.commit()
+                return {"message": "Data inserted successfully"}, 201
+        except Exception as e:
+            return {"error": str(e)}, 500
+        finally:
+            connection.close()
+            
 @api.route('/api/temperature/share')
 class TemperatureResource(Resource):
     def get(self):
@@ -116,18 +127,6 @@ class TemperatureResource(Resource):
                     for row in rows
                 ]
                 return data
-        finally:
-            connection.close()
-
-        connection = pymysql.connect(**db_params)
-        try:
-            with connection.cursor() as cursor:
-                sql = "INSERT INTO temperature (Temperature, Humidite) VALUES (%s, %s)"
-                cursor.execute(sql, (data['Temperature'], data['Humidite']))
-                connection.commit()
-                return {"message": "Data inserted successfully"}, 201
-        except Exception as e:
-            return {"error": str(e)}, 500
         finally:
             connection.close()
 
@@ -251,4 +250,4 @@ if __name__ == '__main__':
         User.create_table_if_not_exists()
         Temperature.create_table_if_not_exists()
 
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
