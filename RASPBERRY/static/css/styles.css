@@ -209,3 +209,8 @@ h1 {
     background-color:black; /* Add some transparency */
     font-size: 10px;
 }
+
+.temperatureTable i {
+    font-size: 20px;
+    color: #f0ad4e;
+}

@@ -4,38 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link>
     <script>
         function updateTable(data) {
             var tableBody = document.getElementById('temperatureTable').getElementsByTagName('tbody')[0];
-    
+
             data.forEach(row => {
                 let dateTime = row.Date.split('T');
                 let date = dateTime[0];
                 let time = dateTime[1];
                 let datetimeAttribute = `${date}_${time}`;
-    
+
                 if (!document.querySelector(`#temperatureTable tr[data-datetime="${datetimeAttribute}"]`)) {
                     var newRow = tableBody.insertRow(0);
                     newRow.setAttribute('data-datetime', datetimeAttribute);
-    
+
                     var cellDate = newRow.insertCell(0);
                     var cellTime = newRow.insertCell(1);
                     var cellTemperature = newRow.insertCell(2);
                     var cellHumidity = newRow.insertCell(3);
-    
+                    var cellIcon = newRow.insertCell(4);
+
                     cellDate.textContent = date;
                     cellTime.textContent = time;
                     cellTemperature.textContent = row.Temperature;
                     cellHumidity.textContent = row.Humidite;
+                    cellIcon.innerHTML = getWeatherIcon(row.Temperature, row.Humidite);
                 }
                 if (tableBody.rows.length > 12) {
                     tableBody.deleteRow(12);
                 }
             });
         }
-    
+
+        function getWeatherIcon(temperature, humidity) {
+            if (temperature < 10 && humidity <= 70) {
+                return '<i class="fas fa-snowflake"></i>';
+            } else if (temperature < 20) {
+                return '<i class="fas fa-cloud-rain"></i>';
+            } else if (temperature >= 20 && humidity >= 50) {
+                return '<i class="fas fa-cloud-sun"></i>';
+            } else if (temperature >= 24 && humidity <= 20) {
+                return '<i class="fas fa-sun"></i>';
+            }
+            return '<i class="fas fa-thermometer-half"></i>';
+        }
+
         function fetchAllTemperatureData() {
             fetch('/api/temperature')
                 .then(response => response.json())
@@ -44,7 +60,7 @@
                 })
                 .catch(error => console.error('Error fetching all temperature data:', error));
         }
-    
+
         function fetchRecentTemperatureData() {
             fetch('/api/temperature/recent')
                 .then(response => response.json())
@@ -95,13 +111,13 @@
                     alert("Erreur lors de la récupération des données de température. Veuillez réessayer.");
                 });
         }
-    
+
         document.addEventListener('DOMContentLoaded', fetchAllTemperatureData);
-    
+
         // Fetch recent data every 5 seconds
         setInterval(fetchRecentTemperatureData, 5000);
     </script>
-    
+
 </head>
 <body>
     <a href="{{ url_for('home') }}"><button class="home-return">Accueil</button></a>
@@ -117,6 +133,7 @@
                 <th id="Heure">Heure</th>
                 <th id="temperature">Température (°C)</th>
                 <th id="humidity">Humidité (%)</th>
+                <th id="meteo">Météo</th>
             </tr>
         </thead>
         <tbody>
