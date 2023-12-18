@@ -12,7 +12,7 @@ from flask import redirect, url_for, session
 app = Flask(__name__)
 api = Api(app)
 app.config['SQLALCHEMY_ECHO'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:azerty@localhost/cesi'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/cesi'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -37,7 +37,7 @@ app.secret_key = 'cesi_di_2023'
 db_params = {
             'host': 'localhost',
             'user': 'root',
-            'password': 'azerty',
+            'password': '',
             'db': 'cesi',
             'charset': 'utf8mb4',
             'cursorclass': pymysql.cursors.DictCursor
@@ -78,7 +78,7 @@ class TemperatureResource(Resource):
         connection = pymysql.connect(**db_params)
         try:
             with connection.cursor() as cursor:
-                sql = "SELECT `Date`, `Temperature`, `Humidite` FROM `temperature` ORDER BY `Date` DESC LIMIT 5"
+                sql = "SELECT `Date`, `Temperature`, `Humidite` FROM `temperature` ORDER BY `Date` DESC "
                 cursor.execute(sql)
                 rows = cursor.fetchall()
 
@@ -95,6 +95,29 @@ class TemperatureResource(Resource):
             connection.close()
     def post(self):
         data = api.payload
+
+@api.route('/api/temperature/share')
+class TemperatureResource(Resource):
+    def get(self):
+        
+        connection = pymysql.connect(**db_params)
+        try:
+            with connection.cursor() as cursor:
+                sql = "SELECT `Date`, `Temperature`, `Humidite` FROM `temperature` ORDER BY `Date` DESC LIMIT 1"
+                cursor.execute(sql)
+                rows = cursor.fetchall()
+
+                data = [
+                    {
+                        'Date': row['Date'].isoformat() if isinstance(row['Date'], datetime) else row['Date'],
+                        'Temperature': row['Temperature'],
+                        'Humidite': row['Humidite']
+                    }
+                    for row in rows
+                ]
+                return data
+        finally:
+            connection.close()
 
         connection = pymysql.connect(**db_params)
         try:

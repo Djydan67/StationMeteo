@@ -59,7 +59,7 @@
 
         function getTemperatureDataToShare() {
             // Effectuer une requête à l'API Flask pour obtenir les données de température
-            fetch('/api/temperature')
+            fetch('/api/temperature/share')
                 .then(response => response.json())
                 .then(data => {
                     // Les données sont maintenant disponibles dans la variable 'data'
