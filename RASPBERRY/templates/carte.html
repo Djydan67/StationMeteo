@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map Example</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('home') }}"><button class="home-return">Accueil</button></a>
+    <a href="{{ url_for('logout') }}"><button class="home-return">Se déconnecter</button></a>
+
+    <h1>Bonjour {{ session.get('username', 'Guest')|upper }}! </h1>
+    <h1>Représentation graphique des dernières données de température</h1>
+
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([48.560556, 7.694444], 13);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([48.560556, 7.694444]).addTo(map)
+            .bindPopup('A pretty CSS popup.<br> Easily customizable.')
+            .openPopup();
+    </script>
+    <a href="{{ url_for('temperature') }}"><button class="home-return">Afficher le tableau</button></a>
+    </div>
+    <div class="cesi-form">
+        <header>
+            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/e/ef/Logo_cesi_2022.png/1200px-Logo_cesi_2022.png" alt="CESI Logo" style="width: 50px; height: auto;">
+        </header>
+        <h3>| CESI | École d'ingénieurs | DI 2023-2025 |</h3>
+    </div>
+</body>
+</html>

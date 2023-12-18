@@ -30,6 +30,9 @@
                     cellTemperature.textContent = row.Temperature;
                     cellHumidity.textContent = row.Humidite;
                 }
+                if (tableBody.rows.length > 12) {
+                    tableBody.deleteRow(12);
+                }
             });
         }
     
@@ -123,6 +126,8 @@
         <a href="#" id="shareButton" class="home-return action-button" onclick="shareOnTwitter()">Partager sur Twitter</a>
     </div>
     <a href="{{ url_for('graphique') }}"><button class="home-return">Afficher le graphique</button></a>
+    <a href="{{ url_for('carte') }}"><button class="home-return">Afficher la carte</button></a>
+
     <div class="cesi-form">
         <header>
             <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/e/ef/Logo_cesi_2022.png/1200px-Logo_cesi_2022.png" alt="CESI Logo" style="width: 50px; height: auto;">

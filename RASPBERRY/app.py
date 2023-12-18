@@ -78,7 +78,7 @@ class TemperatureResource(Resource):
         connection = pymysql.connect(**db_params)
         try:
             with connection.cursor() as cursor:
-                sql = "SELECT `Date`, `Temperature`, `Humidite` FROM `temperature` ORDER BY `Date` DESC "
+                sql = "SELECT `Date`, `Temperature`, `Humidite` FROM `temperature` ORDER BY `Date` DESC LIMIT 12"
                 cursor.execute(sql)
                 rows = cursor.fetchall()
 
@@ -197,6 +197,11 @@ class RecentTemperatureResource(Resource):
 @login_required
 def temperature():
     return render_template('temperature.html')
+
+@app.route('/carte')
+@login_required
+def carte():
+    return render_template('carte.html')
 
 @app.route('/graphique')
 @login_required
